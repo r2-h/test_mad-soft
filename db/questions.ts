@@ -2,18 +2,26 @@ export type Variant = {
   answer: string
   correct: boolean
 }
+export type YesOrNo = "Да" | "Нет"
 
-export type Question = {
-  id: string
-  type: "checkbox" | "radio" | "yesOrNo"
-  question: string
-  variants: Variant[]
-}
+export type Question =
+  | {
+      id: string
+      type: "checkbox" | "radio"
+      question: string
+      variants: Variant[]
+    }
+  | {
+      id: string
+      type: "yesOrNo"
+      question: string
+      answer: YesOrNo
+    }
 
 export const questions: Question[] = [
   {
     id: "1",
-    type: "checkbox",
+    type: "radio",
     question: "Что должен знать фронтенд-разработчик? Назовите три ключевых технологии",
     variants: [
       { answer: "HTML, CSS и JavaScript", correct: true },
@@ -23,42 +31,40 @@ export const questions: Question[] = [
   },
   {
     id: "2",
-    type: "radio",
-    question: "sfsdfsdadadad asdasdas asda",
+    type: "checkbox",
+    question: "Что такое JavaScript?",
     variants: [
-      { answer: "qweqwe", correct: true },
-      { answer: "sdffsd", correct: false },
-      { answer: "sdfsd", correct: false },
+      { answer: "Однопоточный язык программирования", correct: true },
+      { answer: "Динамически типизируемый язык программирования", correct: false },
+      { answer: "mad-soft", correct: false },
     ],
   },
   {
     id: "3",
     type: "yesOrNo",
-    question: "AAAAAA dasdas da",
-    variants: [
-      { answer: "sdfsfgd", correct: false },
-      { answer: "sdas2fsd", correct: false },
-      { answer: "rrrrrr", correct: true },
-    ],
+    question: "Разработчик ждёт ответ на тестовое задание ?",
+    answer: "Да",
   },
   {
     id: "4",
     type: "checkbox",
-    question: "AAAAAA dasdas da",
+    question: "Какие из перечисленных ниже типов данных являются допустимыми в JavaScript?",
     variants: [
-      { answer: "sdfdsd", correct: false },
-      { answer: "sdfsd", correct: false },
-      { answer: "rrrrrr", correct: true },
+      { answer: "string", correct: true },
+      { answer: "boolean", correct: true },
+      { answer: "supabase", correct: false },
+      { answer: "convex", correct: false },
     ],
   },
   {
     id: "5",
-    type: "checkbox",
-    question: "AAAAAA dasdas da",
+    type: "radio",
+    question: "Каким будет результат '2' + '2' в JavaScript?",
     variants: [
-      { answer: "sdfassd", correct: false },
-      { answer: "sdfsd", correct: false },
-      { answer: "rrrrrr", correct: true },
+      { answer: "mad-soft", correct: false },
+      { answer: "22", correct: true },
+      { answer: "array", correct: false },
+      { answer: "NextJS", correct: false },
     ],
   },
 ]
