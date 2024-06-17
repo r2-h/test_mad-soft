@@ -10,12 +10,16 @@ import { useEffect, useState } from "react"
 export default function Home() {
   const time = 15
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(
-    Number(localStorage.getItem("currentQuestionIndex")) || 0
+    Number(localStorage.getItem("currentQuestionIndex")) || 0,
   )
   const [timeLeft, setTimeLeft] = useState(
-    localStorage.getItem("timeLeft") === null ? time : Number(localStorage.getItem("timeLeft"))
+    localStorage.getItem("timeLeft") === null
+      ? time
+      : Number(localStorage.getItem("timeLeft")),
   )
-  const [isTimerActive, setIsTimerActive] = useState(localStorage.getItem("isTimerActive") === "true")
+  const [isTimerActive, setIsTimerActive] = useState(
+    localStorage.getItem("isTimerActive") === "true",
+  )
 
   const handleNextQuestion = () => {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1)
@@ -38,7 +42,10 @@ export default function Home() {
   const disabled = currentQuestionIndex >= questions.length || timeLeft === 0
 
   useEffect(() => {
-    localStorage.setItem("currentQuestionIndex", currentQuestionIndex.toString())
+    localStorage.setItem(
+      "currentQuestionIndex",
+      currentQuestionIndex.toString(),
+    )
   }, [currentQuestionIndex])
 
   useEffect(() => {
@@ -49,7 +56,10 @@ export default function Home() {
       setIsTimerActive(false)
       setTimeLeft(0)
     } else if (isTimerActive && timeLeft > 0) {
-      const timerId = setInterval(() => setTimeLeft((prevTime) => prevTime - 1), 1000)
+      const timerId = setInterval(
+        () => setTimeLeft((prevTime) => prevTime - 1),
+        1000,
+      )
       return () => clearInterval(timerId)
     } else if (timeLeft === 0) {
       setIsTimerActive(false)
@@ -80,7 +90,7 @@ export default function Home() {
             className={cn(
               "w-12 h-2 bg-slate-300 mb-4",
               q.id < currentQuestion.id && "bg-slate-950",
-              q.id === currentQuestion.id && "bg-red-600"
+              q.id === currentQuestion.id && "bg-red-600",
             )}
           />
         ))}
@@ -101,7 +111,10 @@ export default function Home() {
         />
       )}
       {currentQuestion.type === "yesOrNo" && (
-        <YesOrNoQuestion handleNextQuestion={handleNextQuestion} disabled={disabled} />
+        <YesOrNoQuestion
+          handleNextQuestion={handleNextQuestion}
+          disabled={disabled}
+        />
       )}
     </main>
   )

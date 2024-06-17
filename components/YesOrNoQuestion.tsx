@@ -29,7 +29,9 @@ export const YesOrNoQuestion = ({ handleNextQuestion, disabled }: Props) => {
         onChange={handleChange}
         disabled={disabled}
       />
-      <p className={cn("text-red-600 text-xs invisible", error && "visible")}>{error ? error : "-"}</p>
+      <p className={cn("text-red-600 text-xs invisible", error && "visible")}>
+        {error ? error : "-"}
+      </p>
       <Button
         onClick={handleNextQuestion}
         className="bg-red-600 h-8 px-10 hover:bg-destructive/90 mt-5"

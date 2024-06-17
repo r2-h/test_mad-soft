@@ -8,7 +8,11 @@ type Props = {
   handleNextQuestion: () => void
   disabled: boolean
 }
-export const RadioQuestion = ({ currentQuestion, handleNextQuestion, disabled }: Props) => {
+export const RadioQuestion = ({
+  currentQuestion,
+  handleNextQuestion,
+  disabled,
+}: Props) => {
   const [answer, setAnswer] = useState("")
 
   return (

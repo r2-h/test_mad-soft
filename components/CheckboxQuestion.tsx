@@ -9,11 +9,17 @@ type Props = {
   handleNextQuestion: () => void
   disabled: boolean
 }
-export const CheckboxQuestion = ({ currentQuestion, handleNextQuestion, disabled }: Props) => {
+export const CheckboxQuestion = ({
+  currentQuestion,
+  handleNextQuestion,
+  disabled,
+}: Props) => {
   const [answer, setAnswer] = useState<string[]>([])
 
   const handleCheckedChange = (checked: CheckedState, variant: string) => {
-    setAnswer((prev) => (checked ? [...prev, variant] : prev.filter((item) => item !== variant)))
+    setAnswer((prev) =>
+      checked ? [...prev, variant] : prev.filter((item) => item !== variant),
+    )
   }
 
   return (
@@ -24,7 +30,9 @@ export const CheckboxQuestion = ({ currentQuestion, handleNextQuestion, disabled
             <Checkbox
               id={variant.answer}
               disabled={disabled}
-              onCheckedChange={(checked) => handleCheckedChange(checked, variant.answer)}
+              onCheckedChange={(checked) =>
+                handleCheckedChange(checked, variant.answer)
+              }
             />
             <label
               htmlFor={variant.answer}
