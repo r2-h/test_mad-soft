@@ -9,26 +9,38 @@ import { useEffect, useState } from "react"
 
 export default function Home() {
   const time = 15
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(
-    Number(localStorage.getItem("currentQuestionIndex")) || 0,
-  )
-  const [timeLeft, setTimeLeft] = useState(
-    localStorage.getItem("timeLeft") === null
-      ? time
-      : Number(localStorage.getItem("timeLeft")),
-  )
-  const [isTimerActive, setIsTimerActive] = useState(
-    localStorage.getItem("isTimerActive") === "true",
-  )
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [timeLeft, setTimeLeft] = useState(time)
+  const [isTimerActive, setIsTimerActive] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedQuestionIndex = Number(
+        localStorage.getItem("currentQuestionIndex"),
+      )
+      const savedTimeLeft =
+        localStorage.getItem("timeLeft") !== null
+          ? Number(localStorage.getItem("timeLeft"))
+          : time
+      const savedIsTimerActive =
+        localStorage.getItem("isTimerActive") === "true"
+
+      setCurrentQuestionIndex(savedQuestionIndex || 0)
+      setTimeLeft(savedTimeLeft)
+      setIsTimerActive(savedIsTimerActive)
+    }
+  }, [])
 
   const handleNextQuestion = () => {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1)
   }
 
   const onRestart = () => {
-    localStorage.removeItem("currentQuestionIndex")
-    localStorage.removeItem("timeLeft")
-    localStorage.removeItem("isTimerActive")
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("currentQuestionIndex")
+      localStorage.removeItem("timeLeft")
+      localStorage.removeItem("isTimerActive")
+    }
     setCurrentQuestionIndex(0)
     setTimeLeft(time)
     setIsTimerActive(false)
@@ -42,15 +54,19 @@ export default function Home() {
   const disabled = currentQuestionIndex >= questions.length || timeLeft === 0
 
   useEffect(() => {
-    localStorage.setItem(
-      "currentQuestionIndex",
-      currentQuestionIndex.toString(),
-    )
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "currentQuestionIndex",
+        currentQuestionIndex.toString(),
+      )
+    }
   }, [currentQuestionIndex])
 
   useEffect(() => {
-    localStorage.setItem("timeLeft", timeLeft.toString())
-    localStorage.setItem("isTimerActive", isTimerActive.toString())
+    if (typeof window !== "undefined") {
+      localStorage.setItem("timeLeft", timeLeft.toString())
+      localStorage.setItem("isTimerActive", isTimerActive.toString())
+    }
 
     if (currentQuestionIndex === questions.length) {
       setIsTimerActive(false)
