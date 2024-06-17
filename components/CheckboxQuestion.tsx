@@ -1,20 +1,47 @@
-import { Variant } from "@/db/questions"
+import { Question } from "@/db/questions"
+import { CheckedState } from "@radix-ui/react-checkbox"
+import { useState } from "react"
+import { Button } from "./ui/button"
 import { Checkbox } from "./ui/checkbox"
 
 type Props = {
-  variant: Variant
+  currentQuestion: Question
+  handleNextQuestion: () => void
+  disabled: boolean
 }
-export const CheckboxQuestion = ({ variant }: Props) => {
-    console.log(variant, 1)
+export const CheckboxQuestion = ({ currentQuestion, handleNextQuestion, disabled }: Props) => {
+  const [answer, setAnswer] = useState<string[]>([])
+
+  const handleCheckedChange = (checked: CheckedState, variant: string) => {
+    setAnswer((prev) => (checked ? [...prev, variant] : prev.filter((item) => item !== variant)))
+  }
+
   return (
-    <li className="items-top flex space-x-2">
-      <Checkbox id={variant.answer} />
-      <label
-        htmlFor={variant.answer}
-        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
+    <>
+      <div className="flex flex-col justify-center gap-y-3 items-start">
+        {currentQuestion.variants.map((variant) => (
+          <li className="items-top flex space-x-2" key={variant.answer}>
+            <Checkbox
+              id={variant.answer}
+              disabled={disabled}
+              onCheckedChange={(checked) => handleCheckedChange(checked, variant.answer)}
+            />
+            <label
+              htmlFor={variant.answer}
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
+            >
+              {variant.answer}
+            </label>
+          </li>
+        ))}
+      </div>
+      <Button
+        onClick={handleNextQuestion}
+        className="bg-red-600 h-8 px-10 hover:bg-destructive/90 mt-5"
+        disabled={disabled}
       >
-        {variant.answer}
-      </label>
-    </li>
+        Ответить
+      </Button>
+    </>
   )
 }

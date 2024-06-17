@@ -1,22 +1,19 @@
+export type Answer = {
+  id: string
+  answer: string
+}
+
 export type Variant = {
   answer: string
   correct: boolean
 }
-export type YesOrNo = "Да" | "Нет"
 
-export type Question =
-  | {
-      id: string
-      type: "checkbox" | "radio"
-      question: string
-      variants: Variant[]
-    }
-  | {
-      id: string
-      type: "yesOrNo"
-      question: string
-      answer: YesOrNo
-    }
+export type Question = {
+  id: string
+  type: "checkbox" | "radio" | "yesOrNo"
+  question: string
+  variants: Variant[]
+}
 
 export const questions: Question[] = [
   {
@@ -42,8 +39,8 @@ export const questions: Question[] = [
   {
     id: "3",
     type: "yesOrNo",
-    question: "Разработчик ждёт ответ на тестовое задание ?",
-    answer: "Да",
+    question: "Верно ли утверждение 'Python - это язык программирования'? Ответьте Да или Нет",
+    variants: [{ answer: "da", correct: true }],
   },
   {
     id: "4",
@@ -62,7 +59,7 @@ export const questions: Question[] = [
     question: "Каким будет результат '2' + '2' в JavaScript?",
     variants: [
       { answer: "mad-soft", correct: false },
-      { answer: "22", correct: true },
+      { answer: "'22'", correct: true },
       { answer: "array", correct: false },
       { answer: "NextJS", correct: false },
     ],
